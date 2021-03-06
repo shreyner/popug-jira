@@ -1,4 +1,21 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/popug-jira/src",
+  "monorepo": true,
+  "root": "apps/popug-jira",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/popug-jira/tsconfig.app.json"
+  },
+  "projects": {
+    "popug-jira": {
+      "type": "application",
+      "root": "apps/popug-jira",
+      "entryFile": "main",
+      "sourceRoot": "apps/popug-jira/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/popug-jira/tsconfig.app.json"
+      }
+    }
+  }
 }
