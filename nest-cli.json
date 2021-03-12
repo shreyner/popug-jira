@@ -1,20 +1,20 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/popug-jira/src",
+  "sourceRoot": "apps/task-tracker/src",
   "monorepo": true,
-  "root": "apps/popug-jira",
+  "root": "apps/task-tracker",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/popug-jira/tsconfig.app.json"
+    "tsConfigPath": "apps/task-tracker/tsconfig.app.json"
   },
   "projects": {
-    "popug-jira": {
+    "task-tracker": {
       "type": "application",
-      "root": "apps/popug-jira",
+      "root": "apps/task-tracker",
       "entryFile": "main",
-      "sourceRoot": "apps/popug-jira/src",
+      "sourceRoot": "apps/task-tracker/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/popug-jira/tsconfig.app.json"
+        "tsConfigPath": "apps/task-tracker/tsconfig.app.json"
       }
     }
   }

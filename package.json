@@ -10,15 +10,15 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:popug-jira:dev": "nest start popug-jira --watch",
-    "start:popug-jira:debug": "nest start popug-jira --debug --watch",
-    "start:popug-jira:prod": "node dist/popug-jira/main",
+    "start:task-tracker:dev": "nest start task-tracker --watch",
+    "start:task-tracker:debug": "nest start task-tracker --debug --watch",
+    "start:task-tracker:prod": "node dist/task-tracker/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/popug-jira/test/jest-e2e.json",
+    "test:e2e": "jest --config ./apps/task-tracker/test/jest-e2e.json",
     "db:create": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/develop\" npx mikro-orm schema:create -r",
     "db:update": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/develop\" npx mikro-orm schema:update -r",
     "db:migrate": "exit 1"
@@ -83,7 +83,7 @@
   "mikro-orm": {
     "useTsNode": true,
     "configPaths": [
-      "./apps/popug-jira/src/mikro-orm.config.ts"
+      "./apps/task-tracker/src/mikro-orm.config.ts"
     ]
   }
 }

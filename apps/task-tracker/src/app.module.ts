@@ -9,7 +9,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: join(__dirname, '..', '..', '..', '.popug-jira.env'),
+      envFilePath: join(__dirname, '..', '..', '..', '.task-tracker.env'),
       isGlobal: true,
     }),
     OrmModule,
