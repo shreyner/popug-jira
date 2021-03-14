@@ -37,17 +37,17 @@ EventStorm и модель данных
 | Создаем кошелек                                                                | _User.Registered_      | Create walet                                                  | User.id                         | -               |
 | ---                                                                            | ---                    | ---                                                           | ---                             | ---             |
 | Создание задачи                                                                | User                   | Create Task                                                   | -                               | Task.created    |
-| Генерация cost/reward                                                          | _Task.created_         | Generate cost/reward for task                                 | task.id                         | -               |
+| Генерация cost/reward (Асинхронно)                                                          | _Task.created_         | Generate cost/reward for task                                 | task.id                         | -               |
 | ---                                                                            | ---                    | ---                                                           | ---                             | ---             |
 | Менеджер асайнит все открытые задачи на сотрудников                            | User with role Manager | Get all Task with status Open and assigned to User            | User.role + Tasks + Users       | Task.assigned   |
 | Отправляем пользователю нотификацию о назначенной задаче (Асинхронно)          | _Task.assigned_        | Send notification                                             | Task + User                     | -               |
-| Списываем cost c счета пользователя за назначенную на него задачу (Асинхронно) | _Task.assigned_        | Create transaction on Debit amount for User                   | Task.id + User.id + Cost/Reword | -               |
+| Списываем cost c счета пользователя за назначенную на него (Асинхронно) задачу (Асинхронно) | _Task.assigned_        | Create transaction on Debit amount for User                   | Task.id + User.id + Cost/Reword | -               |
 | ---                                                                            | ---                    | ---                                                           | ---                             | ---             |
 | Сотрудник закрыл задачу                                                        | User                   | Change status Task to Close                                   | Task                            | Task.close      |
-| Начисляем reward на счет пользователя                                          | _Task.closed_          | Create transaction on Credit amount front User                | Task.id + Reword                | -               |
+| Начисляем reward на счет пользователя (Асинхронно)                                          | _Task.closed_          | Create transaction on Credit amount front User                | Task.id + Reword                | -               |
 | ---                                                                            | ---                    | ---                                                           | ---                             | ---             |
 | Выплатить пользователям деньги за день                                         | Cyrcle close work day  | Get all user with plus amount and creat transaction on payout | Wallet                          | Account.Payout  |
-| Отправить нотификацию о закрытии периода и выплате                             | _Account.Payout_       | Send notification about payout                                | Transacton                      | -               |
+| Отправить нотификацию о закрытии периода и выплате (Асинхронно)                             | _Account.Payout_       | Send notification about payout                                | Transacton                      | -               |
 
 ### Модель данных + Домены
 
@@ -83,5 +83,5 @@ EventStorm и модель данных
 
 **CUD События:**
 Для сущностей:
-- User
-- Task
+- User - После регистрации
+- Task - После CRUD над сущностью
