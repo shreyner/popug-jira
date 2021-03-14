@@ -27,7 +27,7 @@ EventStorm и модель данных
 
 ### EventStorm
 
-TODO: Добавить картинку со схемой EventStorm'а
+![Event Storming by Judith Birmoser](https://user-images.githubusercontent.com/9334650/111065386-70766680-84ca-11eb-9518-7c9f4b93bae6.jpg)
 
 Актор, команда и событие.
 
@@ -51,7 +51,7 @@ TODO: Добавить картинку со схемой EventStorm'а
 
 ### Модель данных + Домены
 
-TODO: Тут должна быть картинка
+![Event Storming by Judith Birmoser(1)](https://user-images.githubusercontent.com/9334650/111065407-8f74f880-84ca-11eb-904f-0d31ea0e9553.jpg)
 
 # Домашняя работа 3
 
