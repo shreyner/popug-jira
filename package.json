@@ -92,7 +92,8 @@
   "mikro-orm": {
     "useTsNode": true,
     "configPaths": [
-      "./apps/task-tracker/src/mikro-orm.config.ts"
+      "./apps/task-tracker/src/mikro-orm.config.ts",
+      "./apps/auth/src/mikro-orm.config.ts"
     ]
   }
 }
