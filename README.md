@@ -7,3 +7,7 @@ Popug jira.
 ```bash
 $ npm install
 ```
+
+### Полезные ссылки
+
+Как выбрать target в зависимости от NodeJS https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
