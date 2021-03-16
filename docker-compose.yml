@@ -19,3 +19,17 @@ services:
     environment:
       PGADMIN_DEFAULT_PASSWORD: 'example'
       PGADMIN_DEFAULT_EMAIL: 'al.shreyner@gmail.com'
+
+  redis:
+    image: library/redis:6.2
+    ports:
+      - 6379:6379
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTS=redis:redis
+    ports:
+      - 3082:8081
