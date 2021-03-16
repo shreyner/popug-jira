@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/core';
 import { Task } from '../../entities';
-import { TaskState } from './interfaces/tasks.interface';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { TaskState } from "./enum/task-status.enum";
 
 @Injectable()
 export class TasksService {

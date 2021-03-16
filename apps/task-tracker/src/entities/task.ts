@@ -6,17 +6,18 @@ import {
   BigIntType,
 } from '@mikro-orm/core';
 
-import { ITask, TaskState } from '../modules/tasks/interfaces/tasks.interface';
+import { TaskInterface } from '../modules/tasks/interface/tasks.interface';
+import { TaskState } from '../modules/tasks/enum/task-status.enum';
 
 @Entity({})
-export class Task implements ITask {
+export class Task implements TaskInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: string;
 
   @Property()
   description: string;
 
-  @Enum({ items: () => TaskState, defaultRaw: TaskState.Open })
+  @Enum({ items: () => TaskState, default: TaskState.Open })
   state: TaskState;
 
   @Property()
