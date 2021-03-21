@@ -1,20 +1,21 @@
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityRepository } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
-import { UserInterface } from './user.interface';
-
-const users: readonly UserInterface[] = [
-  {
-    id: '1',
-    email: 'a@b.c',
-    password: '1',
-    role: 'user',
-  },
-];
+import { UserInterface } from './interface/user.interface';
+import { User } from '../../entities';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: EntityRepository<User>,
+  ) {}
+
   async findByEmail(email: string): Promise<UserInterface | null> {
-    return Promise.resolve().then(() =>
-      users.find((user) => user.email === email),
-    );
+    return this.userRepository.findOne({ email });
+  }
+
+  async findById(id: unknown): Promise<UserInterface | null> {
+    return this.userRepository.findOne({ id });
   }
 }

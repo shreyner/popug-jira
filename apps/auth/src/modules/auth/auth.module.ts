@@ -5,10 +5,13 @@ import { UsersModule } from '../users/users.module';
 import { LocalStrategy } from './strategy/local.strategy';
 import { AuthController } from './auth.controller';
 import { BearerStrategy } from './strategy/bearer.strategy';
+import { SessionSerializer } from './session.serializer.service';
+import { TokensModule } from '../tokens/tokens.module';
 
 @Module({
-  imports: [UsersModule, PassportModule],
-  providers: [AuthService, LocalStrategy, BearerStrategy],
+  imports: [UsersModule, PassportModule, TokensModule],
+  providers: [AuthService, LocalStrategy, SessionSerializer, BearerStrategy],
   controllers: [AuthController],
+  exports: [AuthService],
 })
 export class AuthModule {}
