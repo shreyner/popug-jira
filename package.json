@@ -16,15 +16,17 @@
     "start:auth:dev": "nest start auth --watch",
     "start:auth:debug": "nest start auth --debug --watch",
     "start:auth:prod": "node dist/auth/main",
+    "db:create:auth": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/auth_service\" npx ts-node ./scripts/re-create-schema.ts auth",
+    "db:update:auth": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/auth_service\" npx ts-node ./scripts/update-schema.ts auth",
+    "db:create:task-tracker": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/tasks-tracker_service\" npx ts-node ./scripts/re-create-schema.ts task-tracker",
+    "db:update:task-tracker": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/tasks-tracker_service\" npx ts-node ./scripts/update-schema.ts task-tracker",
+    "db:migrate": "exit 1",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/task-tracker/test/jest-e2e.json",
-    "db:create": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/develop\" npx mikro-orm schema:create -r",
-    "db:update": "DATABASE_URI=\"postgresql://postgres:example@localhost:5432/develop\" npx mikro-orm schema:update -r",
-    "db:migrate": "exit 1"
+    "test:e2e": "jest --config ./apps/task-tracker/test/jest-e2e.json"
   },
   "dependencies": {
     "@mikro-orm/core": "^4.4.4",
@@ -97,13 +99,6 @@
     "testEnvironment": "node",
     "roots": [
       "<rootDir>/apps/"
-    ]
-  },
-  "mikro-orm": {
-    "useTsNode": true,
-    "configPaths": [
-      "./apps/task-tracker/src/mikro-orm.config.ts",
-      "./apps/auth/src/mikro-orm.config.ts"
     ]
   }
 }
