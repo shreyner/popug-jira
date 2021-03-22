@@ -36,3 +36,10 @@ services:
       - REDIS_HOSTS=redis:redis
     ports:
       - 3082:8081
+
+  main-nats:
+    image: library/nats-streaming:0.21.1
+    ports:
+      - 4222:4222
+      - 3083:8222
+    command: -p 4222 -m 8222 --store sql --sql_driver postgres --sql_source="user=postgres password=example host=172.17.0.1 database=nats sslmode=disable"
