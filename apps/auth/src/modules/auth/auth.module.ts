@@ -5,7 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { LocalStrategy } from './strategy/local.strategy';
 import { AuthController } from './auth.controller';
 import { BearerStrategy } from './strategy/bearer.strategy';
-import { SessionSerializer } from './session.serializer.service';
+import { SessionSerializer } from './session.serializer';
 import { TokensModule } from '../tokens/tokens.module';
 
 @Module({

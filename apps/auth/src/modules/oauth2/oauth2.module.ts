@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { AccessToken, AuthorizationCode, RefreshToken } from '../../entities';
+import { AccessToken, AuthorizationCodeEntity, RefreshToken } from '../../entities';
 import { Oauth2Controller } from './oauth2.controller';
 import { Oauth2Service } from './oauth2.service';
 import { AuthorizationCodeService } from './authorization-code/authorization-code.service';
@@ -10,7 +10,7 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
-    MikroOrmModule.forFeature([AccessToken, RefreshToken, AuthorizationCode]),
+    MikroOrmModule.forFeature([AccessToken, RefreshToken, AuthorizationCodeEntity]),
     UsersModule,
     ClientsModule,
     AuthModule,

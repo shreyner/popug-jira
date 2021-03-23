@@ -5,8 +5,8 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { Client } from './client';
-import { User } from './user';
+import { Client } from './clien.entityt';
+import { User } from './user.entity';
 import { RefreshTokenInterface } from '../modules/oauth2/interface/refresh-token.interface';
 
 @Entity({})

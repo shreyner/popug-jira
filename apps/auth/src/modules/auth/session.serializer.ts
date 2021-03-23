@@ -34,9 +34,7 @@ export class SessionSerializer extends PassportSerializer {
       return done(true);
     }
 
-    const { password, ...otherFields } = user;
-
-    return done(null, otherFields);
+    return done(null, user);
   }
 
   serializeUser(

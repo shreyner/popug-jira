@@ -12,9 +12,10 @@ import {
 import { isNil } from '@nestjs/common/utils/shared.utils';
 import { HasLocalAuthGuard } from './guard/has-local-auth.guard';
 import { AuthenticatedGuard } from './guard/authenticated.guard';
-import { User } from '../../common/user.decorator';
-import { UserInterface } from '../users/interface/user.interface';
+import { User as UserDecorator } from '../../common/user.decorator';
 import { AuthExceptionFilter } from './filter/auth-exception.filter';
+import { User } from '../../entities';
+import { wrap } from '@mikro-orm/core';
 
 @Controller('auth')
 export class AuthController {
@@ -45,22 +46,21 @@ export class AuthController {
   @Redirect('/')
   @UseGuards(HasLocalAuthGuard)
   @Post('login')
-  async login(
-    @User() user: UserInterface | null,
-    @Query() query: Record<string, unknown>,
-  ) {
+  async login(@Query() query: Record<string, unknown>) {
     if (query.redirect_to) {
       //TODO: Надо добавить прверку на domain
       const { redirect_to, ...otherQuery } = query;
 
       return { url: `${redirect_to}?${qs.stringify(otherQuery)}` };
     }
+
+    return { url: '/' };
   }
 
   @UseGuards(AuthenticatedGuard)
   @UseFilters(AuthExceptionFilter)
   @Get('check')
-  async checkUserAndCounter(@User() user, @Session() session) {
+  async checkUserAndCounter(@UserDecorator() user: User, @Session() session) {
     if (isNil(session.counter)) {
       session.counter = 1;
     } else {
@@ -70,7 +70,7 @@ export class AuthController {
     const { counter } = session;
 
     return {
-      user,
+      user: wrap(user).toJSON(),
       counter,
     };
   }

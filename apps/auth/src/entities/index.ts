@@ -1,5 +1,5 @@
-export { User } from './user';
-export { AccessToken } from './access-token';
-export { AuthorizationCode } from './authorization-code';
-export { Client } from './client';
-export { RefreshToken } from './refresh-token';
+export { User } from './user.entity';
+export { AccessToken } from './access-token.entity';
+export { AuthorizationCodeEntity } from './authorization-code.entity';
+export { Client } from './clien.entityt';
+export { RefreshToken } from './refresh-token.entity';

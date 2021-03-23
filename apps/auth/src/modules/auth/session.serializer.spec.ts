@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SessionSerializer } from './session.serializer.service';
+import { SessionSerializer } from './session.serializer';
 
 describe('SessionSerializer', () => {
   let provider: SessionSerializer;

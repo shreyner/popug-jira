@@ -1,4 +1,5 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Dictionary, wrap } from '@mikro-orm/core';
 import { User } from '../../entities';
 import { User as UserDecorator } from '../../common/user.decorator';
 import { HasBearerAuthGuard } from '../auth/guard/has-bearer-auth.guard';
@@ -7,9 +8,7 @@ import { HasBearerAuthGuard } from '../auth/guard/has-bearer-auth.guard';
 export class ProfilesController {
   @UseGuards(HasBearerAuthGuard)
   @Get('me')
-  async me(@UserDecorator() user: User): Promise<Omit<User, 'password'>> {
-    const { password, ...otherFields } = user;
-
-    return otherFields;
+  async me(@UserDecorator() user: User): Promise<Dictionary> {
+    return wrap(user).toJSON();
   }
 }

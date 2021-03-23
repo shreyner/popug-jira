@@ -12,12 +12,11 @@ export class AuthService {
   async validateUser(
     email: string,
     password: string,
-  ): Promise<Omit<UserInterface, 'password'> | null> {
+  ): Promise<UserInterface | null> {
     const user = await this.userService.findByEmail(email);
-    if (user && user.password === password) {
-      const { password, ...result } = user;
 
-      return result;
+    if (user.validatePassword(password)) {
+      return user;
     }
 
     return null;

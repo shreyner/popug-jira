@@ -5,12 +5,12 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { Client } from './client';
-import { User } from './user';
+import { Client } from './clien.entityt';
+import { User } from './user.entity';
 import { AuthorizationCodeInterface } from '../modules/oauth2/interface/authorization-code.interface';
 
 @Entity({})
-export class AuthorizationCode implements AuthorizationCodeInterface {
+export class AuthorizationCodeEntity implements AuthorizationCodeInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
@@ -31,7 +31,7 @@ export class AuthorizationCode implements AuthorizationCodeInterface {
     redirectUri,
     client,
     user,
-  }: Omit<AuthorizationCode, 'id'>) {
+  }: Omit<AuthorizationCodeEntity, 'id'>) {
     this.code = code;
     this.redirectUri = redirectUri;
     this.client = client;

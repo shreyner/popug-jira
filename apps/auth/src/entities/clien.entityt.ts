@@ -9,7 +9,7 @@ export class Client implements ClientInterface {
   @Property({ index: true, unique: true })
   clientId!: string;
 
-  @Property({ unique: true })
+  @Property({ unique: true, hidden: true })
   clientSecret!: string;
 
   @Property()
@@ -18,7 +18,7 @@ export class Client implements ClientInterface {
   @Property()
   redirectUrl!: string;
 
-  @Property()
+  @Property({ default: false })
   isTrusted!: boolean;
 
   constructor({
