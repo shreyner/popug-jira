@@ -4,9 +4,10 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { OauthStrategy } from './strategy/oauth.strategy';
 import { SessionSerializer } from './session.serializer';
+import { UsersModule } from '../users/users.module';
 
 @Module({
-  imports: [PassportModule],
+  imports: [PassportModule, UsersModule],
   providers: [AuthService, OauthStrategy, SessionSerializer],
   controllers: [AuthController],
 })

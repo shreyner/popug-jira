@@ -1,18 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-oauth2';
+import { Inject, Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
 import { isNil } from '@nestjs/common/utils/shared.utils';
+import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class OauthStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(
+    @Inject(UsersService)
+    private readonly userService: UsersService,
+  ) {
     super({
       authorizationURL: 'http://localhost:3080/oauth2/authorize',
       tokenURL: 'http://localhost:3080/oauth2/token',
-      clientID:
-        'dafd121a6995654eeaaf8375bd89b24716dd316450f2b5619bf24c88ce5e983b',
-      clientSecret:
-        '90aed6fe419fd608505fdd47e03c86c51649a4a26c785ea5c61db72a9857456d',
+      clientID: 'b6bde2bd4c785e778c53ad3382688c6a',
+      clientSecret: '520a68866334df1c530cebf572ae96179a719c5cbc2f8f7b',
       callbackURL: 'http://localhost:3070/auth/callback',
       skipUserProfile: false,
     });
@@ -21,10 +23,7 @@ export class OauthStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile) {
-    //TODO: Get or CreateUser
-    console.log('Profile', profile);
-
-    return profile;
+    return await this.userService.findAndCreate(profile);
   }
 
   async userProfile(
@@ -37,12 +36,11 @@ export class OauthStrategy extends PassportStrategy(Strategy) {
           'http://localhost:3080/profiles/me',
           accessToken,
           (err, userProfile) => {
-            console.log('Error', err, userProfile);
             if (!isNil(err)) {
               return reject(err);
             }
 
-            return resolve(userProfile);
+            return resolve(JSON.parse(userProfile as string));
           },
         );
       });

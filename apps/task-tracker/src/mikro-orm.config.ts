@@ -1,13 +1,13 @@
 import { join } from 'path';
 import { Logger } from '@nestjs/common';
 import { Options } from '@mikro-orm/core';
-import { Task } from './entities';
+import { Task, User } from './entities';
 
 const logger = new Logger('MikroORM');
 const DATABASE_URI = process.env.DATABASE_URI;
 
 const options: Options = {
-  entities: [Task],
+  entities: [Task, User],
   clientUrl: DATABASE_URI,
   type: 'postgresql',
   debug: true,

@@ -4,7 +4,7 @@ import { Options } from '@mikro-orm/core';
 import {
   RefreshToken,
   Client,
-  AuthorizationCodeEntity,
+  AuthorizationCode,
   AccessToken,
   User,
 } from './entities';
@@ -13,7 +13,7 @@ const logger = new Logger('MikroORM');
 const DATABASE_URI = process.env.DATABASE_URI;
 
 const options: Options = {
-  entities: [RefreshToken, Client, AuthorizationCodeEntity, AccessToken, User],
+  entities: [RefreshToken, Client, AuthorizationCode, AccessToken, User],
   clientUrl: DATABASE_URI,
   type: 'postgresql',
   debug: true,

@@ -1,4 +1,11 @@
-import { Entity, Enum, PrimaryKey, Property, wrap } from '@mikro-orm/core';
+import { v4 as uuidV4 } from 'uuid';
+import {
+  Entity,
+  Enum,
+  PrimaryKey,
+  Property,
+  BeforeCreate,
+} from '@mikro-orm/core';
 import { UserInterface } from '../modules/users/interface/user.interface';
 import { UserRole } from '../modules/users/enum/user-role';
 
@@ -9,6 +16,9 @@ export class User implements UserInterface {
 
   @Property()
   email: string;
+
+  @Property()
+  publicId: string;
 
   // TODO: Добавить bcrypto
   @Property({ hidden: true })
@@ -35,5 +45,10 @@ export class User implements UserInterface {
   }) {
     this.email = email;
     this.role = role;
+  }
+
+  @BeforeCreate()
+  beforeCreate() {
+    this.publicId = uuidV4();
   }
 }

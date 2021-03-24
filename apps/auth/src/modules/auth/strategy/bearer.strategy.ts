@@ -21,8 +21,6 @@ export class BearerStrategy extends PassportStrategy(Strategy) {
       throw new ForbiddenException();
     }
 
-    const { password, ...otherFieldsUser } = accessToken.user;
-
-    return otherFieldsUser;
+    return accessToken.user;
   }
 }

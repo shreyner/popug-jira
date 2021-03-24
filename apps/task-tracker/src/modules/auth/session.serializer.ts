@@ -1,9 +1,17 @@
 import { isNil } from '@nestjs/common/utils/shared.utils';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
+  constructor(
+    @Inject(UsersService)
+    private readonly userService: UsersService,
+  ) {
+    super();
+  }
+
   userIdGuard(user: unknown): user is { id: number } {
     return (
       typeof user === 'object' &&
@@ -12,24 +20,20 @@ export class SessionSerializer extends PassportSerializer {
   }
 
   async deserializeUser(
-    userId: unknown,
+    userId: number,
     done: (err: unknown, result?: unknown) => void,
   ): Promise<unknown> {
     if (typeof userId !== 'number') {
       return done(true, undefined);
     }
 
-    // const user = await this.userService.findById(userId);
-    // TODO: Добавить store для User и получать его от туда или из Redis
-    const user = { id: 1, email: 'al.shreyner@gmail.com' };
+    const user = await this.userService.findById(userId);
 
     if (isNil(user)) {
       return done(true);
     }
 
-    const { ...otherFields } = user;
-
-    return done(null, otherFields);
+    return done(null, user);
   }
 
   serializeUser(

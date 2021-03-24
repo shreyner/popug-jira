@@ -1,4 +1,5 @@
 import * as qs from 'qs';
+import { wrap } from '@mikro-orm/core';
 import {
   Controller,
   Get,
@@ -15,7 +16,6 @@ import { AuthenticatedGuard } from './guard/authenticated.guard';
 import { User as UserDecorator } from '../../common/user.decorator';
 import { AuthExceptionFilter } from './filter/auth-exception.filter';
 import { User } from '../../entities';
-import { wrap } from '@mikro-orm/core';
 
 @Controller('auth')
 export class AuthController {

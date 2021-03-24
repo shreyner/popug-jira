@@ -79,8 +79,6 @@ export class Oauth2Controller {
       redirect_uri,
     } = exchangeCodeDto;
 
-    console.log('exchangeCodeDto', exchangeCodeDto);
-
     const {
       refresh_token,
       access_token,

@@ -10,7 +10,7 @@ import { User } from './user.entity';
 import { AuthorizationCodeInterface } from '../modules/oauth2/interface/authorization-code.interface';
 
 @Entity({})
-export class AuthorizationCodeEntity implements AuthorizationCodeInterface {
+export class AuthorizationCode implements AuthorizationCodeInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
@@ -31,7 +31,7 @@ export class AuthorizationCodeEntity implements AuthorizationCodeInterface {
     redirectUri,
     client,
     user,
-  }: Omit<AuthorizationCodeEntity, 'id'>) {
+  }: Omit<AuthorizationCode, 'id'>) {
     this.code = code;
     this.redirectUri = redirectUri;
     this.client = client;
