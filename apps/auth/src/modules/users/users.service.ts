@@ -1,20 +1,14 @@
-import { InjectRepository } from '@mikro-orm/nestjs';
-import { EntityRepository } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 import { User } from '../../entities';
+import { UserRepository } from '../../repositories/user.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: EntityRepository<User>,
-  ) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
-  async findByEmail(email: string): Promise<User | null> {
-    return this.userRepository.findOne({ email });
-  }
+  async update(updateUser: Partial<User> & Pick<User, 'id'>): Promise<unknown> {
+    const user = await this.userRepository.update(updateUser);
 
-  async findById(id: unknown): Promise<User | null> {
-    return this.userRepository.findOne({ id });
+    return user.toJSON();
   }
 }

@@ -25,8 +25,8 @@ export class ClientsController {
   }
 
   @Post()
-  addClient(@Body() createClinetDto: CreateClientDto): Promise<Client> {
-    return this.clientsService.createClient(createClinetDto);
+  addClient(@Body() createClientDto: CreateClientDto) {
+    return this.clientsService.createClient(createClientDto);
   }
 
   @Get(':clientId')

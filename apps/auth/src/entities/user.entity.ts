@@ -4,20 +4,24 @@ import {
   Enum,
   PrimaryKey,
   Property,
-  BeforeCreate,
+  BaseEntity,
+  EntityRepositoryType,
 } from '@mikro-orm/core';
 import { UserInterface } from '../modules/users/interface/user.interface';
 import { UserRole } from '../modules/users/enum/user-role';
+import { UserRepository } from '../repositories/user.repository';
 
-@Entity({})
-export class User implements UserInterface {
+@Entity({
+  customRepository: () => UserRepository,
+})
+export class User extends BaseEntity<User, 'id'> implements UserInterface {
   @PrimaryKey({ index: true })
   id: number;
 
   @Property()
   email: string;
 
-  @Property()
+  @Property({ onCreate: () => uuidV4() })
   publicId: string;
 
   // TODO: Добавить bcrypto
@@ -32,10 +36,6 @@ export class User implements UserInterface {
     this.encryptedPassword = password;
   }
 
-  validatePassword(password: string): boolean {
-    return this.encryptedPassword === password;
-  }
-
   constructor({
     email,
     role = UserRole.Employee,
@@ -43,12 +43,15 @@ export class User implements UserInterface {
     email: string;
     role: UserRole;
   }) {
+    super();
+
     this.email = email;
     this.role = role;
   }
 
-  @BeforeCreate()
-  beforeCreate() {
-    this.publicId = uuidV4();
+  validatePassword(password: string): boolean {
+    return this.encryptedPassword === password;
   }
+
+  [EntityRepositoryType]?: UserRepository;
 }

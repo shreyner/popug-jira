@@ -1,13 +1,15 @@
 import { isNil } from '@nestjs/common/utils/shared.utils';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
-import { UsersService } from '../users/users.service';
+import { UserRepository } from '../../repositories/user.repository';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { User } from '../../entities';
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
   constructor(
-    @Inject(UsersService)
-    private readonly userService: UsersService,
+    @InjectRepository(User)
+    private readonly userRepository: UserRepository,
   ) {
     super();
   }
@@ -27,7 +29,7 @@ export class SessionSerializer extends PassportSerializer {
       return done(true, undefined);
     }
 
-    const user = await this.userService.findById(userId);
+    const user = await this.userRepository.findById(userId);
 
     if (isNil(user)) {
       return done(true);

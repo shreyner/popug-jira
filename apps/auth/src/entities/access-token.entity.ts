@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   BigIntType,
   Entity,
   ManyToOne,
@@ -10,7 +11,9 @@ import { User } from './user.entity';
 import { AccessTokenInterface } from '../modules/oauth2/interface/access-token.interface';
 
 @Entity({})
-export class AccessToken implements AccessTokenInterface {
+export class AccessToken
+  extends BaseEntity<AccessToken, 'id'>
+  implements AccessTokenInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
@@ -32,6 +35,8 @@ export class AccessToken implements AccessTokenInterface {
     client: Client;
     user: User;
   }) {
+    super();
+
     this.token = token;
     this.client = client;
     this.user = user;

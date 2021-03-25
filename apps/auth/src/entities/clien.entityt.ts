@@ -1,8 +1,16 @@
-import { BigIntType, Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  BaseEntity,
+  BigIntType,
+  Entity,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
 import { ClientInterface } from '../modules/clients/interface/client.interface';
 
 @Entity({})
-export class Client implements ClientInterface {
+export class Client
+  extends BaseEntity<Client, 'id'>
+  implements ClientInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
@@ -34,6 +42,8 @@ export class Client implements ClientInterface {
     redirectUrl: string;
     isTrusted: boolean;
   }) {
+    super();
+
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.name = name;

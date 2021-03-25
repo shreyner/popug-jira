@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   BigIntType,
   Entity,
   ManyToOne,
@@ -10,7 +11,9 @@ import { User } from './user.entity';
 import { RefreshTokenInterface } from '../modules/oauth2/interface/refresh-token.interface';
 
 @Entity({})
-export class RefreshToken implements RefreshTokenInterface {
+export class RefreshToken
+  extends BaseEntity<RefreshToken, 'id'>
+  implements RefreshTokenInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
@@ -32,6 +35,8 @@ export class RefreshToken implements RefreshTokenInterface {
     client: Client;
     user: User;
   }) {
+    super();
+
     this.token = token;
     this.client = client;
     this.user = user;

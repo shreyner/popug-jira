@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   BigIntType,
   Entity,
   ManyToOne,
@@ -10,7 +11,9 @@ import { User } from './user.entity';
 import { AuthorizationCodeInterface } from '../modules/oauth2/interface/authorization-code.interface';
 
 @Entity({})
-export class AuthorizationCode implements AuthorizationCodeInterface {
+export class AuthorizationCode
+  extends BaseEntity<AuthorizationCode, 'id'>
+  implements AuthorizationCodeInterface {
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
@@ -31,7 +34,14 @@ export class AuthorizationCode implements AuthorizationCodeInterface {
     redirectUri,
     client,
     user,
-  }: Omit<AuthorizationCode, 'id'>) {
+  }: {
+    code: string;
+    redirectUri: string;
+    client: Client;
+    user: User;
+  }) {
+    super();
+
     this.code = code;
     this.redirectUri = redirectUri;
     this.client = client;
