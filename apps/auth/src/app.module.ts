@@ -11,6 +11,7 @@ import { OrmModule } from './modules/orm/orm.module';
 import { ClientsModule } from './modules/clients/clients.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
 import { TokensModule } from './modules/tokens/tokens.module';
+import { MessageBusModule } from './modules/message-bus/message-bus.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TokensModule } from './modules/tokens/tokens.module';
     ClientsModule,
     ProfilesModule,
     TokensModule,
+    MessageBusModule,
   ],
   controllers: [AppController],
   providers: [AppService],
