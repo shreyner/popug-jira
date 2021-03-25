@@ -6,6 +6,7 @@ import { Event } from './event.type';
 //TODO: Что это такое и как его именовать?
 @Injectable()
 export class MessageBusProvider {
+  // FIXME: Вынести в отдельную lib
   constructor(private readonly publisher: Publisher) {}
 
   sendEvent<T extends Event<string, unknown>>(

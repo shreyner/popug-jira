@@ -2,6 +2,7 @@ import shuffle from 'lodash/shuffle';
 import sample from 'lodash/sample';
 import {
   BadRequestException,
+  Inject,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -13,6 +14,29 @@ import { TaskState } from "./enum/task-status.enum";
 import { UserRole } from '../../../../auth/src/modules/users/enum/user-role';
 import { TaskRepository } from '../../repositories/task.repository';
 import { UserRepository } from '../../repositories/user.repository'; // FIXME: Вынести в отдельную lib
+import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/message-bus.provider';
+import { Event } from '../../../../auth/src/modules/message-bus/event.type'; // FIXME: Вынести в отдельную lib
+
+type EventTaskCUD = Event<
+  'TaskCreated' | 'TaskUpdated',
+  Pick<Task, 'publicId' | 'description' | 'state'> & {
+  assignUser?: { publicId: string | null };
+}
+  >;
+
+type EventTaskCreated = Event<
+  'TaskCreated',
+  Pick<Task, 'publicId' | 'description' | 'state'> & {
+  assignUser?: { publicId: string | null };
+}
+  >;
+type EventTaskClosed = Event<'TaskClosed', Pick<Task, 'publicId' | 'state'>>;
+type EventTaskAssigned = Event<
+  'TaskAssigned',
+  Pick<Task, 'publicId'> & {
+  assignUser: { publicId: string | null };
+}
+  >;
 
 @Injectable()
 export class TasksService {
@@ -21,6 +45,8 @@ export class TasksService {
     private readonly tasksRepository: TaskRepository,
     @InjectRepository(User)
     private readonly userRepository: UserRepository,
+    @Inject(MessageBusProvider)
+    private readonly mb: MessageBusProvider,
   ) {}
 
   getOpenTask(): Promise<Task[]> {
@@ -32,6 +58,24 @@ export class TasksService {
       const task = this.tasksRepository.create(createTask);
 
       await this.tasksRepository.persistAndFlush(task);
+
+      this.mb.sendEvent<EventTaskCreated>('task', 'TaskCreated', {
+        publicId: task.publicId,
+        state: task.state,
+        description: task.description,
+        assignUser: {
+          publicId: null,
+        },
+      });
+
+      this.mb.sendEvent<EventTaskCUD>('task-stream', 'TaskCreated', {
+        publicId: task.publicId,
+        state: task.state,
+        description: task.description,
+        assignUser: {
+          publicId: null,
+        },
+      });
 
       return task;
     } catch (e) {
@@ -47,6 +91,17 @@ export class TasksService {
     }
 
     task.state = TaskState.Close;
+
+    this.mb.sendEvent<EventTaskClosed>('task', 'TaskClosed', {
+      publicId: task.publicId,
+      state: task.state,
+    });
+
+    this.mb.sendEvent<EventTaskCUD>('task-stream', 'TaskUpdated', {
+      publicId: task.publicId,
+      state: task.state,
+      description: task.description,
+    });
 
     await this.tasksRepository.persistAndFlush(task);
   }
