@@ -15,8 +15,12 @@ export class UsersController {
   ) {}
 
   @EventPattern('user')
-  listenUserEvents(@Payload() data: unknown, @Ctx() ctx: NatsStreamingContext) {
-    console.log('ListenUserEvents. Data:', data);
+  async listenUserEvents(
+    @Payload() data: Event<any, any>,
+    @Ctx() ctx: NatsStreamingContext,
+  ) {
+    await this.userConsumer.handleEvent(data);
+    ctx.message.ack();
   }
 
   @EventPattern('user-stream')
