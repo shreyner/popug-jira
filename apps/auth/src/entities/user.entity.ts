@@ -18,10 +18,10 @@ export class User extends BaseEntity<User, 'id'> implements UserInterface {
   @PrimaryKey({ index: true })
   id: number;
 
-  @Property()
+  @Property({ unique: true })
   email: string;
 
-  @Property({ onCreate: () => uuidV4() })
+  @Property({ unique: true, onCreate: () => uuidV4() })
   publicId: string;
 
   // TODO: Добавить bcrypto
