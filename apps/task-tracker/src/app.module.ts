@@ -8,6 +8,7 @@ import { OrmModule } from './modules/orm/orm.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { MessageBusModule } from './modules/message-bus/message-bus.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsersModule } from './modules/users/users.module';
     TasksModule,
     AuthModule,
     UsersModule,
+    MessageBusModule,
   ],
   controllers: [AppController],
   providers: [AppService],
