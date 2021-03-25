@@ -32,9 +32,11 @@
     "@mikro-orm/core": "^4.4.4",
     "@mikro-orm/nestjs": "^4.2.0",
     "@mikro-orm/postgresql": "^4.4.4",
+    "@nestjs-plugins/nestjs-nats-streaming-transport": "^1.0.18",
     "@nestjs/common": "^7.6.13",
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.13",
+    "@nestjs/microservices": "^7.6.15",
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.6.13",
     "class-transformer": "^0.4.0",
@@ -50,7 +52,8 @@
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.6"
+    "rxjs": "^6.6.6",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@mikro-orm/cli": "^4.4.4",
@@ -69,6 +72,7 @@
     "@types/passport-oauth2": "^1.4.10",
     "@types/redis": "^2.8.28",
     "@types/supertest": "^2.0.10",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "eslint": "^7.20.0",
