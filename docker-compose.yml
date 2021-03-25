@@ -3,6 +3,8 @@ version: '3'
 services:
   pg:
     image: postgres:12.2
+    #    volumes:
+    #      - ./docker/postgres/docker-entrypoint-initdb.d/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_PASSWORD: 'example'
       POSTGRES_USER: 'postgres'
