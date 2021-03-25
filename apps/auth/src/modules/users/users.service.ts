@@ -1,10 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { User } from '../../entities';
 import { UserRepository } from '../../repositories/user.repository';
+import { MessageBusProvider } from '../message-bus/message-bus.provider';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @Inject(MessageBusProvider)
+    private readonly mb: MessageBusProvider,
+    @InjectRepository(User)
+    private readonly userRepository: UserRepository,
+  ) {}
 
   async createUser({
     email,
@@ -24,6 +31,12 @@ export class UsersService {
 
   async update(updateUser: Partial<User> & Pick<User, 'id'>): Promise<unknown> {
     const user = await this.userRepository.update(updateUser);
+
+    this.mb.sendEvent('user-stream', 'UserUpdated', {
+      email: user.email,
+      publicId: user.publicId,
+      role: user.role,
+    });
 
     return user.toJSON();
   }
