@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { Publisher } from '@nestjs-plugins/nestjs-nats-streaming-transport';
 import { v4 as uuid } from 'uuid';
+import { Event } from './event.type';
 
 //TODO: Что это такое и как его именовать?
 @Injectable()
 export class MessageBusProvider {
   constructor(private readonly publisher: Publisher) {}
 
-  sendEvent<T extends unknown>(topic: string, eventName: string, data: T) {
+  sendEvent<T extends Event<string, unknown>>(
+    topic: string,
+    eventName: T['eventName'],
+    data: T['data'],
+  ) {
     const event = {
       eventId: uuid(),
       eventVersion: 1,
