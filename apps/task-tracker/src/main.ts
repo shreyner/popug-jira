@@ -1,6 +1,6 @@
-import * as session from 'express-session';
-import * as passport from 'passport';
-import * as createRedisStore from 'connect-redis';
+import session from 'express-session';
+import passport from 'passport';
+import createRedisStore from 'connect-redis';
 import * as redis from 'redis';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';

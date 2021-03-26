@@ -8,8 +8,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from '../../entities';
+import { Task, User } from '../../entities';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { User as UserDecorator } from '../../common/user.decorator';
 
 @Controller('tasks')
 export class TasksController {
@@ -26,6 +27,11 @@ export class TasksController {
   @Post()
   create(@Body() createTask: CreateTaskDto): Promise<Task> {
     return this.tasksService.create(createTask);
+  }
+
+  @Post('re-assign-all')
+  reAssignAll(@UserDecorator() user: User) {
+    return this.tasksService.reAssignAll(user);
   }
 
   @HttpCode(204)

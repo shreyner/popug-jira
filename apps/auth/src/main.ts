@@ -1,11 +1,11 @@
-import * as session from 'express-session';
-import * as passport from 'passport';
-import * as createRedisStore from 'connect-redis';
+import morgan from 'morgan';
+import session from 'express-session';
+import passport from 'passport';
+import createRedisStore from 'connect-redis';
 import * as redis from 'redis';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as morgan from 'morgan';
 import { AppModule } from './app.module';
 
 const RedisStore = createRedisStore(session);
