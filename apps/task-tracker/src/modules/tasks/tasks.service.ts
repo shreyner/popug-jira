@@ -2,6 +2,7 @@ import shuffle from 'lodash/shuffle';
 import sample from 'lodash/sample';
 import {
   BadRequestException,
+  ForbiddenException,
   Inject,
   ForbiddenException,
   Injectable,
@@ -15,7 +16,10 @@ import { UserRole } from '../../../../auth/src/modules/users/enum/user-role';
 import { TaskRepository } from '../../repositories/task.repository';
 import { UserRepository } from '../../repositories/user.repository'; // FIXME: Вынести в отдельную lib
 import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/message-bus.provider';
-import { Event } from '../../../../auth/src/modules/message-bus/event.type'; // FIXME: Вынести в отдельную lib
+import { Event } from '../../../../auth/src/modules/message-bus/event.type';
+import { UserRole } from '../../../../auth/src/modules/users/enum/user-role';
+import { TaskRepository } from '../../repositories/task.repository';
+import { UserRepository } from '../../repositories/user.repository'; // FIXME: Вынести в отдельную lib
 
 type EventTaskCUD = Event<
   'TaskCreated' | 'TaskUpdated',
