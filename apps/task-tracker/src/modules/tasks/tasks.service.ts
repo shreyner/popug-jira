@@ -4,43 +4,39 @@ import {
   BadRequestException,
   ForbiddenException,
   Inject,
-  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Task, User } from '../../entities';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { TaskState } from "./enum/task-status.enum";
+import { TaskState } from './enum/task-status.enum';
 import { UserRole } from '../../../../auth/src/modules/users/enum/user-role';
 import { TaskRepository } from '../../repositories/task.repository';
 import { UserRepository } from '../../repositories/user.repository'; // FIXME: Вынести в отдельную lib
 import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/message-bus.provider';
 import { Event } from '../../../../auth/src/modules/message-bus/event.type';
-import { UserRole } from '../../../../auth/src/modules/users/enum/user-role';
-import { TaskRepository } from '../../repositories/task.repository';
-import { UserRepository } from '../../repositories/user.repository'; // FIXME: Вынести в отдельную lib
 
 type EventTaskCUD = Event<
   'TaskCreated' | 'TaskUpdated',
   Pick<Task, 'publicId' | 'description' | 'state'> & {
-  assignUser?: { publicId: string | null };
-}
-  >;
+    assignUser?: { publicId: string | null };
+  }
+>;
 
 type EventTaskCreated = Event<
   'TaskCreated',
   Pick<Task, 'publicId' | 'description' | 'state'> & {
-  assignUser?: { publicId: string | null };
-}
-  >;
+    assignUser?: { publicId: string | null };
+  }
+>;
 type EventTaskClosed = Event<'TaskClosed', Pick<Task, 'publicId' | 'state'>>;
 type EventTaskAssigned = Event<
   'TaskAssigned',
   Pick<Task, 'publicId'> & {
-  assignUser: { publicId: string | null };
-}
-  >;
+    assignUser: { publicId: string | null };
+  }
+>;
 
 @Injectable()
 export class TasksService {
