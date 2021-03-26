@@ -121,5 +121,14 @@ export class TasksService {
     });
 
     await this.tasksRepository.persistAndFlush(shuffledOpenedTasks);
+
+    shuffledOpenedTasks.forEach((task) => {
+      this.mb.sendEvent<EventTaskAssigned>('task', 'TaskAssigned', {
+        publicId: task.publicId,
+        assignUser: {
+          publicId: task.assignUser.publicId,
+        },
+      });
+    });
   }
 }
