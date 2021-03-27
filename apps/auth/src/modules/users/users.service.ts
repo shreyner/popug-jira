@@ -60,12 +60,12 @@ export class UsersService {
 
     const user = await this.userRepository.update({ id: targetUserId, role });
 
-    this.mb.sendEvent<EventUserRoleChanged>('user-stream', 'UserRoleChanged', {
+    this.mb.sendEvent<EventUserRoleChanged>('user', 'UserRoleChanged', {
       publicId: user.publicId,
       role: user.role,
     });
 
-    this.mb.sendEvent<EventUserCUD>('user', 'UserUpdated', {
+    this.mb.sendEvent<EventUserCUD>('user-stream', 'UserUpdated', {
       publicId: user.publicId,
       role: user.role,
       email: user.email,
