@@ -1,5 +1,9 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import schemaEventUserRegistered from '@app/event-schemas/auth/be/user-registered/1.json';
+import schemaEventUserCreated from '@app/event-schemas/auth/cud/user-created/1.json';
+import schemaEventUserRoleChanged from '@app/event-schemas/auth/be/user-role-changed/1.json';
+import schemaEventUserUpdate from '@app/event-schemas/auth/cud/user-updated/1.json';
 import { User } from '../../entities';
 import { UserRepository } from '../../repositories/user.repository';
 import { MessageBusProvider } from '../message-bus/message-bus.provider';
@@ -43,19 +47,30 @@ export class UsersService {
 
     user.password = password;
 
+    // TODO: Выглядет как очень не надежно. Что делать в случае сохранения пользователя, но валидация event'а не прошла
     await this.userRepository.persistAndFlush(user);
 
-    this.mb.sendEvent<EventUserRegistered>('user', 'UserRegistered', {
-      publicId: user.publicId,
-      email: user.email,
-      role: user.role,
-    });
+    this.mb.sendEvent<EventUserRegistered>(
+      'user',
+      'UserRegistered',
+      {
+        publicId: user.publicId,
+        email: user.email,
+        role: user.role,
+      },
+      schemaEventUserRegistered,
+    );
 
-    this.mb.sendEvent<EventUserCUD>('user-stream', 'UserCreated', {
-      publicId: user.publicId,
-      email: user.email,
-      role: user.role,
-    });
+    this.mb.sendEvent<EventUserCUD>(
+      'user-stream',
+      'UserCreated',
+      {
+        publicId: user.publicId,
+        email: user.email,
+        role: user.role,
+      },
+      schemaEventUserCreated,
+    );
 
     return user;
   }
@@ -71,16 +86,26 @@ export class UsersService {
 
     const user = await this.userRepository.update({ id: targetUserId, role });
 
-    this.mb.sendEvent<EventUserRoleChanged>('user', 'UserRoleChanged', {
-      publicId: user.publicId,
-      role: user.role,
-    });
+    this.mb.sendEvent<EventUserRoleChanged>(
+      'user',
+      'UserRoleChanged',
+      {
+        publicId: user.publicId,
+        role: user.role,
+      },
+      schemaEventUserRoleChanged,
+    );
 
-    this.mb.sendEvent<EventUserCUD>('user-stream', 'UserUpdated', {
-      publicId: user.publicId,
-      role: user.role,
-      email: user.email,
-    });
+    this.mb.sendEvent<EventUserCUD>(
+      'user-stream',
+      'UserUpdated',
+      {
+        publicId: user.publicId,
+        role: user.role,
+        email: user.email,
+      },
+      schemaEventUserUpdate,
+    );
 
     return user;
   }
@@ -88,11 +113,16 @@ export class UsersService {
   async update(updateUser: Partial<User> & Pick<User, 'id'>): Promise<User> {
     const user = await this.userRepository.update(updateUser);
 
-    this.mb.sendEvent<EventUserCUD>('user-stream', 'UserUpdated', {
-      email: user.email,
-      publicId: user.publicId,
-      role: user.role,
-    });
+    this.mb.sendEvent<EventUserCUD>(
+      'user-stream',
+      'UserUpdated',
+      {
+        email: user.email,
+        publicId: user.publicId,
+        role: user.role,
+      },
+      schemaEventUserUpdate,
+    );
 
     return user;
   }

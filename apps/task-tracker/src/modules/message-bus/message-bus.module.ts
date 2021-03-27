@@ -1,3 +1,4 @@
+import { validate } from 'jsonschema';
 import { Module } from '@nestjs/common';
 import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-transport';
 import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/message-bus.provider';
@@ -12,7 +13,13 @@ import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/mes
       },
     }),
   ],
-  providers: [MessageBusProvider],
+  providers: [
+    MessageBusProvider,
+    {
+      provide: 'JSON_VALIDATOR',
+      useValue: validate,
+    },
+  ],
   exports: [MessageBusProvider],
 })
 export class MessageBusModule {} // FIXME: Вынести в отдельную lib

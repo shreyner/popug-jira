@@ -6,7 +6,7 @@ import { UserRepository } from '../../repositories/user.repository';
 import { User } from '../../entities'; // FIXME:
 
 type EventUserCUD = Event<
-  'UserUpdated' | 'UserCreated',
+  'UserUpdated' | 'UserCreated' | 'UserRegistered',
   { publicId: string; email: string; role: UserRole }
 >;
 
@@ -25,11 +25,29 @@ export class UsersConsumer {
   async handleEvent(event: EventUserCUD | EventUserRoleUpdate) {
     console.log('Consume event', event);
     switch (event.eventName) {
+      case 'UserRegistered':
       case 'UserCreated':
+        if (event.eventVersion !== 1) {
+          console.error(
+            `This version not supported. Event: ${event.eventName} . Producer: ${event.producer} . Id: ${event.eventId}`,
+          );
+          throw new Error(
+            `This version not supported. Event: ${event.eventName} . Producer: ${event.producer} . Id: ${event.eventId}`,
+          );
+        }
+
         await this.userRepository.addUser(event.data);
         break;
       case 'UserRoleChanged':
       case 'UserUpdated':
+        if (event.eventVersion !== 1) {
+          console.error(
+            `This version not supported. Event: ${event.eventName} . Producer: ${event.producer} . Id: ${event.eventId}`,
+          );
+          throw new Error(
+            `This version not supported. Event: ${event.eventName} . Producer: ${event.producer} . Id: ${event.eventId}`,
+          );
+        }
         await this.userRepository.updateByPublicId(event.data);
         break;
       default:
