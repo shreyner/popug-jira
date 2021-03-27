@@ -29,6 +29,7 @@
     "test:e2e": "jest --config ./apps/task-tracker/test/jest-e2e.json"
   },
   "dependencies": {
+    "@cfworker/json-schema": "^1.6.8",
     "@mikro-orm/core": "^4.4.4",
     "@mikro-orm/nestjs": "^4.2.0",
     "@mikro-orm/postgresql": "^4.4.4",
@@ -105,7 +106,12 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "@app/event-schema-registry/(.*)": "<rootDir>/libs/event-schema-registry/src/$1",
+      "@app/event-schema-registry": "<rootDir>/libs/event-schema-registry/src"
+    }
   }
 }
