@@ -16,6 +16,11 @@ type EventUserRoleChanged = Event<
   Pick<User, 'publicId' | 'role'>
 >;
 
+type EventUserRegistered = Event<
+  'UserRegistered',
+  Pick<User, 'publicId' | 'role' | 'email'>
+>;
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -39,6 +44,12 @@ export class UsersService {
     user.password = password;
 
     await this.userRepository.persistAndFlush(user);
+
+    this.mb.sendEvent<EventUserRegistered>('user', 'UserRegistered', {
+      publicId: user.publicId,
+      email: user.email,
+      role: user.role,
+    });
 
     this.mb.sendEvent<EventUserCUD>('user-stream', 'UserCreated', {
       publicId: user.publicId,
