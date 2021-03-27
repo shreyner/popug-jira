@@ -13,6 +13,11 @@
     "baseUrl": "./",
     "incremental": true,
     "esModuleInterop": true,
-    "paths": {}
+    "resolveJsonModule": true,
+    "paths": {
+      "@app/event-schemas/*": ["event-schemas/*"],
+      "@app/event-schema-registry": ["libs/event-schema-registry/src"],
+      "@app/event-schema-registry/*": ["libs/event-schema-registry/src/*"]
+    }
   }
 }
