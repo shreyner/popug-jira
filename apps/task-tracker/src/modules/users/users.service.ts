@@ -11,8 +11,10 @@ export class UsersService {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async findAndCreate(targetUser: User): Promise<User> {
-    let user = await this.userRepository.findOne({ id: targetUser.id });
+  async getOrCreate(targetUser: User): Promise<User> {
+    let user = await this.userRepository.findOne({
+      publicId: targetUser.publicId,
+    });
 
     if (isNil(user)) {
       user = new User(targetUser);

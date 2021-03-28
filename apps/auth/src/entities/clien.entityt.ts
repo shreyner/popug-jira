@@ -17,7 +17,7 @@ export class Client
   @Property({ index: true, unique: true })
   clientId!: string;
 
-  @Property({ unique: true, hidden: true })
+  @Property({ unique: true }) // TODO: add hidden field
   clientSecret!: string;
 
   @Property()
