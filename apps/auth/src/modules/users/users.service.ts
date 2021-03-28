@@ -1,5 +1,6 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { BaseEvent } from '@app/event-schema-registry/types/base-event.type';
 import schemaEventUserRegistered from '@app/event-schemas/auth/be/user-registered/1.json';
 import schemaEventUserCreated from '@app/event-schemas/auth/cud/user-created/1.json';
 import schemaEventUserRoleChanged from '@app/event-schemas/auth/be/user-role-changed/1.json';
@@ -7,20 +8,19 @@ import schemaEventUserUpdate from '@app/event-schemas/auth/cud/user-updated/1.js
 import { User } from '../../entities';
 import { UserRepository } from '../../repositories/user.repository';
 import { MessageBusProvider } from '../message-bus/message-bus.provider';
-import { Event } from '../message-bus/event.type';
 import { UserRole } from './enum/user-role';
 
-type EventUserCUD = Event<
+type EventUserCUD = BaseEvent<
   'UserCreated' | 'UserUpdated' | 'UserDeleted',
   Pick<User, 'publicId' | 'email' | 'role'>
 >;
 
-type EventUserRoleChanged = Event<
+type EventUserRoleChanged = BaseEvent<
   'UserRoleChanged',
   Pick<User, 'publicId' | 'role'>
 >;
 
-type EventUserRegistered = Event<
+type EventUserRegistered = BaseEvent<
   'UserRegistered',
   Pick<User, 'publicId' | 'role' | 'email'>
 >;
