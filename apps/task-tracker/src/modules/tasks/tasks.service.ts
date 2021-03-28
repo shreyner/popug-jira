@@ -9,6 +9,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { BaseEvent } from '@app/event-schema-registry/types/base-event.type';
+import schemaEventBETaskCreated from '@app/event-schemas/task/be/task-created/1.json';
+import schemaEventCUDTaskCreated from '@app/event-schemas/task/cud/task-created/1.json';
+import schemaEventBETaskAssigned from '@app/event-schemas/task/be/task-assigned/1.json';
+import schemaEventCUDTaskUpdate from '@app/event-schemas/task/cud/task-updated/1.json';
+import schemaEventBETaskClosed from '@app/event-schemas/task/be/task-closed/1.json';
 import { Task, User } from '../../entities';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskState } from './enum/task-status.enum';
@@ -19,7 +24,7 @@ import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/mes
 
 type EventTaskCUD = BaseEvent<
   'TaskCreated' | 'TaskUpdated',
-  Pick<Task, 'publicId' | 'description' | 'state'> & {
+  Partial<Pick<Task, 'publicId' | 'state' | 'description'>> & {
     assignUser?: { publicId: string | null };
   }
 >;
@@ -62,23 +67,33 @@ export class TasksService {
 
       await this.tasksRepository.persistAndFlush(task);
 
-      this.mb.sendEvent<EventTaskCreated>('task', 'TaskCreated', {
-        publicId: task.publicId,
-        state: task.state,
-        description: task.description,
-        assignUser: {
-          publicId: null,
+      this.mb.sendEvent<EventTaskCreated>(
+        'task',
+        'TaskCreated',
+        {
+          publicId: task.publicId,
+          state: task.state,
+          description: task.description,
+          assignUser: {
+            publicId: null,
+          },
         },
-      });
+        schemaEventBETaskCreated,
+      );
 
-      this.mb.sendEvent<EventTaskCUD>('task-stream', 'TaskCreated', {
-        publicId: task.publicId,
-        state: task.state,
-        description: task.description,
-        assignUser: {
-          publicId: null,
+      this.mb.sendEvent<EventTaskCUD>(
+        'task-stream',
+        'TaskCreated',
+        {
+          publicId: task.publicId,
+          state: task.state,
+          description: task.description,
+          assignUser: {
+            publicId: null,
+          },
         },
-      });
+        schemaEventCUDTaskCreated,
+      );
 
       return task;
     } catch (e) {
@@ -95,22 +110,33 @@ export class TasksService {
 
     task.state = TaskState.Close;
 
-    this.mb.sendEvent<EventTaskClosed>('task', 'TaskClosed', {
-      publicId: task.publicId,
-      state: task.state,
-    });
+    this.mb.sendEvent<EventTaskClosed>(
+      'task',
+      'TaskClosed',
+      {
+        publicId: task.publicId,
+        state: task.state,
+      },
+      schemaEventBETaskClosed,
+    );
 
-    this.mb.sendEvent<EventTaskCUD>('task-stream', 'TaskUpdated', {
-      publicId: task.publicId,
-      state: task.state,
-      description: task.description,
-    });
+    this.mb.sendEvent<EventTaskCUD>(
+      'task-stream',
+      'TaskUpdated',
+      {
+        publicId: task.publicId,
+        state: task.state,
+        description: task.description,
+      },
+      schemaEventCUDTaskUpdate,
+    );
 
     await this.tasksRepository.persistAndFlush(task);
   }
 
   async reAssignAll(user: User) {
-    if (user.role !== UserRole.Manager) {
+    console.log('user.role', user.role);
+    if (![UserRole.Manager, UserRole.Admin].includes(user.role)) {
       throw new ForbiddenException();
     }
 
@@ -126,7 +152,19 @@ export class TasksService {
     await this.tasksRepository.persistAndFlush(shuffledOpenedTasks);
 
     shuffledOpenedTasks.forEach((task) => {
-      this.mb.sendEvent<EventTaskAssigned>('task', 'TaskAssigned', {
+      this.mb.sendEvent<EventTaskAssigned>(
+        'task',
+        'TaskAssigned',
+        {
+          publicId: task.publicId,
+          assignUser: {
+            publicId: task.assignUser.publicId,
+          },
+        },
+        schemaEventBETaskAssigned,
+      );
+
+      this.mb.sendEvent<EventTaskCUD>('task-stream', 'TaskUpdated', {
         publicId: task.publicId,
         assignUser: {
           publicId: task.assignUser.publicId,
