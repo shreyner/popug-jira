@@ -25,6 +25,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/task-tracker/tsconfig.app.json"
       }
+    },
+    "event-schema-registry": {
+      "type": "library",
+      "root": "libs/event-schema-registry",
+      "entryFile": "index",
+      "sourceRoot": "libs/event-schema-registry/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/event-schema-registry/tsconfig.lib.json"
+      }
     }
   }
 }

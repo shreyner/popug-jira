@@ -1,16 +1,16 @@
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
+import { BaseEvent } from '@app/event-schema-registry/types/base-event.type'; // FIXME:
 import { UserRole } from '../../../../auth/src/modules/users/enum/user-role'; // FIXME:
-import { Event } from '../../../../auth/src/modules/message-bus/event.type';
 import { UserRepository } from '../../repositories/user.repository';
-import { User } from '../../entities'; // FIXME:
+import { User } from '../../entities';
 
-type EventUserCUD = Event<
+type EventUserCUD = BaseEvent<
   'UserUpdated' | 'UserCreated' | 'UserRegistered',
   { publicId: string; email: string; role: UserRole }
 >;
 
-type EventUserRoleUpdate = Event<
+type EventUserRoleUpdate = BaseEvent<
   'UserRoleChanged',
   { publicId: string; role: UserRole }
 >;
