@@ -6,12 +6,15 @@ import {
   Inject,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, User } from '../../entities';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { User as UserDecorator } from '../../common/user.decorator';
+import { AuthenticatedGuard } from '../auth/guard/authenticated.guard';
 
+@UseGuards(AuthenticatedGuard)
 @Controller('tasks')
 export class TasksController {
   constructor(
