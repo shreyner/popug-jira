@@ -1,3 +1,4 @@
+import morgan from 'morgan';
 import session from 'express-session';
 import passport from 'passport';
 import createRedisStore from 'connect-redis';
@@ -37,7 +38,7 @@ async function bootstrap() {
     };
 
     const app = await NestFactory.create(AppModule);
-
+    app.use(morgan('tiny'));
     app.connectMicroservice(optionsMicroservice);
 
     app.useGlobalPipes(new ValidationPipe());

@@ -1,8 +1,8 @@
 import { isNil } from '@nestjs/common/utils/shared.utils';
 import { Injectable } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
-import { UserRepository } from '../../repositories/user.repository';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { UserRepository } from '../../repositories/user.repository';
 import { User } from '../../entities';
 
 @Injectable()
