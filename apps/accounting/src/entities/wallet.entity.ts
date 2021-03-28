@@ -16,7 +16,7 @@ export class Wallet extends BaseEntity<Wallet, 'id'> {
   @PrimaryKey({ index: true })
   id: number;
 
-  @Property()
+  @Property({ default: 0, onCreate: () => 0 })
   balance: number;
 
   @OneToOne({ index: true, owner: true, entity: () => User })
