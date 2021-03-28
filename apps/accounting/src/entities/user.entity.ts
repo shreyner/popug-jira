@@ -1,6 +1,7 @@
 import {
   BaseEntity,
   Entity,
+  EntityRepositoryType,
   Enum,
   OneToOne,
   PrimaryKey,
@@ -8,8 +9,11 @@ import {
 } from '@mikro-orm/core';
 import { UserRole } from '../../../auth/src/modules/users/enum/user-role';
 import { Wallet } from './wallet.entity';
+import { UserRepository } from '../repositories/user.repository';
 
-@Entity({})
+@Entity({
+  customRepository: () => UserRepository,
+})
 export class User extends BaseEntity<User, 'id'> {
   @PrimaryKey({ index: true })
   id: number;
@@ -23,6 +27,12 @@ export class User extends BaseEntity<User, 'id'> {
   @Enum(() => UserRole)
   role: UserRole;
 
-  @OneToOne({ entity: () => Wallet })
+  @OneToOne({
+    entity: () => Wallet,
+    mappedBy: (waller) => waller.user,
+    owner: false,
+  })
   wallet: Wallet;
+
+  [EntityRepositoryType]?: UserRepository;
 }
