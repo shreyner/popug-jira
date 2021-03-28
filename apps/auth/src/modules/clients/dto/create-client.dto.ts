@@ -3,7 +3,7 @@ import { IsBoolean, IsDefined, IsString, Length } from 'class-validator';
 export class CreateClientDto {
   @IsDefined()
   @IsString()
-  @Length(4, 16)
+  @Length(4)
   name: string;
 
   @IsDefined()
