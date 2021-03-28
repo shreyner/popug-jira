@@ -7,7 +7,7 @@ import { HasBearerAuthGuard } from '../auth/guard/has-bearer-auth.guard';
 @Controller('profiles')
 export class ProfilesController {
   @UseGuards(HasBearerAuthGuard)
-  @Get('me')
+  @Get('me') //TODO: Добавить валидациюю по схеме профиля который отсылаем
   async me(@UserDecorator() user: User): Promise<Dictionary> {
     return wrap(user).toJSON();
   }

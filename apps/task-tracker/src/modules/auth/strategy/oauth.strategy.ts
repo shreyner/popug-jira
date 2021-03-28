@@ -23,9 +23,10 @@ export class OauthStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile) {
-    return await this.userService.findAndCreate(profile);
+    return await this.userService.getOrCreate(profile);
   }
 
+  // TODO: Необходимо добавить проверку контракта для профиля пользователя
   async userProfile(
     accessToken: string,
     done: (err: any, profile?: any) => void,
