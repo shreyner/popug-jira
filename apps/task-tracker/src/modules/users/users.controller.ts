@@ -1,9 +1,9 @@
 import { Controller, Inject } from '@nestjs/common';
 import { Ctx, EventPattern, Payload } from '@nestjs/microservices';
 import { NatsStreamingContext } from '@nestjs-plugins/nestjs-nats-streaming-transport';
+import { BaseEvent } from '@app/event-schema-registry/types/base-event.type';
 import { UsersService } from './users.service';
 import { UsersConsumer } from './users.consumer';
-import { Event } from '../../../../auth/src/modules/message-bus/event.type';
 
 @Controller('users')
 export class UsersController {
@@ -16,7 +16,7 @@ export class UsersController {
 
   @EventPattern('user')
   async listenUserEvents(
-    @Payload() data: Event<any, any>,
+    @Payload() data: BaseEvent<any, any>,
     @Ctx() ctx: NatsStreamingContext,
   ) {
     await this.userConsumer.handleEvent(data);
@@ -25,7 +25,7 @@ export class UsersController {
 
   @EventPattern('user-stream')
   async listerUserCUDEvents(
-    @Payload() data: Event<any, any>,
+    @Payload() data: BaseEvent<any, any>,
     @Ctx() ctx: NatsStreamingContext,
   ): Promise<void> {
     await this.userConsumer.handleEvent(data);

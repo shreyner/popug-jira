@@ -1,8 +1,8 @@
+import { validate } from 'jsonschema';
 import { v4 as uuid } from 'uuid';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Publisher } from '@nestjs-plugins/nestjs-nats-streaming-transport';
-import { validate } from 'jsonschema';
-import { Event } from './event.type';
+import { BaseEvent } from '@app/event-schema-registry/types/base-event.type';
 
 //TODO: Что это такое и как его именовать?
 @Injectable()
@@ -16,7 +16,7 @@ export class MessageBusProvider {
     private readonly validatorSchema: typeof validate,
   ) {}
 
-  sendEvent<T extends Event<string, unknown>>(
+  sendEvent<T extends BaseEvent<string, unknown>>(
     topic: string,
     eventName: T['eventName'],
     data: T['data'],
