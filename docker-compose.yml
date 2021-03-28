@@ -41,6 +41,8 @@ services:
 
   main-nats:
     image: library/nats-streaming:0.21.1
+    depends_on:
+      - pg
     ports:
       - 4222:4222
       - 3083:8222
