@@ -29,6 +29,10 @@ export class Task extends BaseEntity<Task, 'id'> {
   @ManyToOne({ entity: () => User, nullable: true })
   assignUser: User;
 
-  @OneToOne({ entity: () => TaskPrice })
+  @OneToOne({
+    entity: () => TaskPrice,
+    mappedBy: (taskPrice) => taskPrice.task,
+    owner: false,
+  })
   price: TaskPrice;
 }
