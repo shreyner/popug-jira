@@ -37,8 +37,7 @@ export class TasksService {
       assignUser?: { publicId?: string | null };
     },
   ): Promise<Task> {
-    const task = new Task();
-    wrap(task).assign(targetTask);
+    const task = new Task(targetTask as any);
 
     if (!isNil(get(targetTask, 'assignUser.publicId'))) {
       const user = await this.userRepository.findByPublicId(
@@ -53,7 +52,6 @@ export class TasksService {
     task.price = this.createTaskPrice(task);
 
     await this.taskRepository.persistAndFlush(task);
-    await this.taskPriceRepository.persistAndFlush(task.price);
 
     return task;
   }

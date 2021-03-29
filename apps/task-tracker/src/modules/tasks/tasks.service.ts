@@ -23,10 +23,11 @@ import { UserRepository } from '../../repositories/user.repository'; // FIXME: Ð
 import { MessageBusProvider } from '../../../../auth/src/modules/message-bus/message-bus.provider';
 
 type EventTaskCUD = BaseEvent<
-  'TaskCreated' | 'TaskUpdated',
-  Partial<Pick<Task, 'publicId' | 'state' | 'description'>> & {
-    assignUser?: { publicId: string | null };
-  }
+  'TaskUpdated',
+  Pick<Task, 'publicId'> &
+    Partial<Pick<Task, 'state' | 'description'>> & {
+      assignUser?: { publicId: string | null };
+    }
 >;
 
 type EventTaskCreated = BaseEvent<
@@ -81,7 +82,7 @@ export class TasksService {
         schemaEventBETaskCreated,
       );
 
-      this.mb.sendEvent<EventTaskCUD>(
+      this.mb.sendEvent<EventTaskCreated>(
         'task-stream',
         'TaskCreated',
         {
