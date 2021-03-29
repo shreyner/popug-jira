@@ -34,9 +34,10 @@ export class UsersConsumer {
           throw new Error(
             `This version not supported. Event: ${event.eventName} . Producer: ${event.producer} . Id: ${event.eventId}`,
           );
+          break;
         }
 
-        await this.userRepository.addUser(event.data);
+        await this.userRepository.addUserOrSkip(event.data);
         break;
       case 'UserRoleChanged':
       case 'UserUpdated':
@@ -47,6 +48,7 @@ export class UsersConsumer {
           throw new Error(
             `This version not supported. Event: ${event.eventName} . Producer: ${event.producer} . Id: ${event.eventId}`,
           );
+          break;
         }
         await this.userRepository.updateByPublicId(event.data);
         break;
