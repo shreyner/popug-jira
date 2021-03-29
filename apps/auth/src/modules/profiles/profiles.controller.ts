@@ -9,6 +9,7 @@ export class ProfilesController {
   @UseGuards(HasBearerAuthGuard)
   @Get('me') //TODO: Добавить валидациюю по схеме профиля который отсылаем
   async me(@UserDecorator() user: User): Promise<Dictionary> {
-    return wrap(user).toJSON();
+    const { id, ...otherUserFields } = wrap(user).toJSON();
+    return otherUserFields;
   }
 }
