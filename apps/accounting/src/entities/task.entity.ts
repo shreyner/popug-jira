@@ -40,5 +40,27 @@ export class Task extends BaseEntity<Task, 'id'> {
   })
   price: TaskPrice;
 
+  constructor({
+    publicId,
+    assignUser,
+    state,
+    price,
+    description,
+  }: {
+    publicId: string;
+    description: string;
+    state: TaskState;
+    assignUser?: User;
+    price?: TaskPrice;
+  }) {
+    super();
+
+    this.publicId = publicId;
+    this.description = description;
+    this.state = state;
+    this.assignUser = assignUser;
+    this.price = price;
+  }
+
   [EntityRepositoryType]?: TaskRepository;
 }
