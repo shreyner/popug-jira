@@ -7,6 +7,7 @@ import { AccountingService } from './accounting.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { OrmModule } from './modules/orm/orm.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { OrmModule } from './modules/orm/orm.module';
     AuthModule,
     UsersModule,
     OrmModule,
+    TasksModule,
   ],
   controllers: [AccountingController],
   providers: [AccountingService],

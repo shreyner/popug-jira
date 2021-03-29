@@ -7,6 +7,8 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AccountingModule } from './accounting.module';
+import { CustomStrategy } from '@nestjs/microservices';
+import { Listener } from '@nestjs-plugins/nestjs-nats-streaming-transport';
 
 const RedisStore = createRedisStore(session);
 
@@ -20,12 +22,30 @@ async function bootstrap() {
       throw new Error(error);
     });
 
+    const optionsMicroservice: CustomStrategy = {
+      strategy: new Listener(
+        'test-cluster', //TODO: Вынести в env
+        'accounting-service-listener',
+        'accounting-service-group',
+        {
+          url: 'http://localhost:4222', //TODO: Вынести в env
+        },
+        {
+          durableName: 'accounting-service-group',
+          manualAckMode: true,
+          deliverAllAvailable: true,
+        },
+      ),
+    };
+
     const app = await NestFactory.create(AccountingModule);
-    app.use(morgan('tiny'));
-    app.useGlobalPipes(new ValidationPipe());
     const configService = app.get<ConfigService>(ConfigService);
 
-    const httpPort = configService.get<number>('PORT');
+    app.use(morgan('tiny'));
+    app.useGlobalPipes(new ValidationPipe());
+
+    app.connectMicroservice(optionsMicroservice);
+    app.useGlobalPipes(new ValidationPipe());
 
     app.use(
       session({
@@ -39,6 +59,9 @@ async function bootstrap() {
     app.use(passport.initialize());
     app.use(passport.session());
 
+    const httpPort = configService.get<number>('PORT');
+
+    await app.startAllMicroservicesAsync();
     await app.listen(httpPort);
   } catch (error) {
     console.error(error);
