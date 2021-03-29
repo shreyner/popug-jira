@@ -13,7 +13,7 @@ export class UsersController {
 
   @EventPattern('user')
   async listenBEUserEvent(
-    @Payload() data: BaseEvent<any, any>,
+    @Payload() data: BaseEvent<any, any>, //TODO: пофиксить типы
     @Ctx() ctx: NatsStreamingContext,
   ) {
     await this.usersConsumer.handleEvent(data);
