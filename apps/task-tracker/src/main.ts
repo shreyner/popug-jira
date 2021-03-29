@@ -23,14 +23,14 @@ async function bootstrap() {
 
     const optionsMicroservice: CustomStrategy = {
       strategy: new Listener(
-        'test-cluster',
+        'test-cluster', //TODO: Вынести в env
         'task-tracker-service-listener',
         'task-tracker-service-group',
         {
           url: 'http://localhost:4222',
         },
         {
-          durableName: 'task-tracker-service-group',
+          durableName: 'task-tracker-service-group', //TODO: Вынести в env
           manualAckMode: true,
           deliverAllAvailable: true,
         },
@@ -38,13 +38,12 @@ async function bootstrap() {
     };
 
     const app = await NestFactory.create(AppModule);
+    const configService = app.get<ConfigService>(ConfigService);
+
     app.use(morgan('tiny'));
     app.connectMicroservice(optionsMicroservice);
 
     app.useGlobalPipes(new ValidationPipe());
-    const configService = app.get<ConfigService>(ConfigService);
-
-    const httpPort = configService.get<number>('PORT');
 
     app.use(
       session({
@@ -58,8 +57,10 @@ async function bootstrap() {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    await app.startAllMicroservicesAsync();
 
+    const httpPort = configService.get<number>('PORT');
+
+    await app.startAllMicroservicesAsync();
     await app.listen(httpPort);
   } catch (error) {
     console.error(error);
