@@ -1,6 +1,7 @@
 import {
   BaseEntity,
   Entity,
+  EntityRepositoryType,
   Enum,
   ManyToOne,
   OneToOne,
@@ -11,8 +12,11 @@ import { v4 as uuid } from 'uuid';
 import { User } from './user.entity';
 import { TaskState } from '../../../task-tracker/src/modules/tasks/enum/task-status.enum';
 import { TaskPrice } from './task-price.entity';
+import { TaskRepository } from '../repositories/task.repository';
 
-@Entity({})
+@Entity({
+  customRepository: () => TaskRepository,
+})
 export class Task extends BaseEntity<Task, 'id'> {
   @PrimaryKey({ index: true })
   id: number;
@@ -35,4 +39,6 @@ export class Task extends BaseEntity<Task, 'id'> {
     owner: false,
   })
   price: TaskPrice;
+
+  [EntityRepositoryType]?: TaskRepository;
 }
