@@ -20,7 +20,7 @@ $ npm install
 
 - 10 best practices to containerize Node.js web applications with Docker [snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker](https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/)
 - Добавить в Docker image [github.com/Yelp/dumb-init](https://github.com/Yelp/dumb-init)
+- Статья с описанием структуры для NestJS приложения [medium.com/the-crowdlinker-chronicle/best-way-to-structure-your-directory-code-nestjs](https://medium.com/the-crowdlinker-chronicle/best-way-to-structure-your-directory-code-nestjs-a06c7a641401)
+- [Naming Cheatsheet](https://github.com/kettanaito/naming-cheatsheet#naming-functions)
 
 ### TODO:
-
-Переключить nats-streaming на postgres
