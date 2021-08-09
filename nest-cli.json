@@ -52,6 +52,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
       }
+    },
+    "sessions": {
+      "type": "application",
+      "root": "apps/sessions",
+      "entryFile": "main",
+      "sourceRoot": "apps/sessions/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sessions/tsconfig.app.json"
+      }
     }
   }
 }
