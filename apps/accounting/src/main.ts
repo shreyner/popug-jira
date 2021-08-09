@@ -6,7 +6,7 @@ import createRedisStore from 'connect-redis';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AccountingModule } from './accounting.module';
+import { AppModule } from './app.module';
 import { CustomStrategy } from '@nestjs/microservices';
 import { Listener } from '@nestjs-plugins/nestjs-nats-streaming-transport';
 
@@ -16,10 +16,6 @@ async function bootstrap() {
   try {
     const redisClient = redis.createClient({
       prefix: 'accounting-service',
-    });
-
-    redisClient.on('error', (error) => {
-      throw new Error(error);
     });
 
     const optionsMicroservice: CustomStrategy = {
@@ -38,7 +34,7 @@ async function bootstrap() {
       ),
     };
 
-    const app = await NestFactory.create(AccountingModule);
+    const app = await NestFactory.create(AppModule);
     const configService = app.get<ConfigService>(ConfigService);
 
     app.use(morgan('tiny'));
@@ -63,6 +59,12 @@ async function bootstrap() {
 
     await app.startAllMicroservicesAsync();
     await app.listen(httpPort);
+
+    redisClient.on('error', async (error) => {
+      await app.close();
+      console.error(error);
+      process.exit(1);
+    });
   } catch (error) {
     console.error(error);
 

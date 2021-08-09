@@ -2,8 +2,6 @@ import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { PassportModule } from '@nestjs/passport';
 import { Module } from '@nestjs/common';
-import { AccountingController } from './accounting.controller';
-import { AccountingService } from './accounting.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { OrmModule } from './modules/orm/orm.module';
@@ -24,7 +22,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
     OrmModule,
     TasksModule,
   ],
-  controllers: [AccountingController],
-  providers: [AccountingService],
+  controllers: [],
+  providers: [],
 })
-export class AccountingModule {}
+export class AppModule {}
