@@ -5,15 +5,15 @@ services:
     image: postgres:12.2
     #    volumes:
     #      - ./docker/postgres/docker-entrypoint-initdb.d/init.sql:/docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - ./datastore/pg:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: 'example'
       POSTGRES_USER: 'postgres'
       POSTGRES_DB: 'develop'
       PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - ./datastore/pg:/var/lib/postgresql/data/pgdata
-    ports:
-      - 5432:5432
 
   pgadmin:
     image: dpage/pgadmin4:5
@@ -24,6 +24,28 @@ services:
     environment:
       PGADMIN_DEFAULT_PASSWORD: 'example'
       PGADMIN_DEFAULT_EMAIL: 'al.shreyner@gmail.com'
+
+  mongo:
+    image: mongo:5
+    ports:
+      - 27017:27017
+    volumes:
+      - ./datastore/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'root'
+      MONGO_INITDB_ROOT_PASSWORD: 'example'
+      MONGO_INITDB_DATABASE: 'main'
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 3084:8081
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: 'root'
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 'example'
 
   redis:
     image: library/redis:6.2
