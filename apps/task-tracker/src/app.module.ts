@@ -3,7 +3,6 @@ import { PassportModule } from '@nestjs/passport';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { OrmModule } from './modules/orm/orm.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -27,6 +26,6 @@ import { MessageBusModule } from './modules/message-bus/message-bus.module';
     MessageBusModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
