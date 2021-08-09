@@ -6,10 +6,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "lib": [
-      "ES2020"
-    ],
-    "target": "ES2020",
+    "lib": ["ES2021"],
+    "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -17,15 +15,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "paths": {
-      "@app/event-schemas/*": [
-        "event-schemas/*"
-      ],
-      "@app/event-schema-registry": [
-        "libs/event-schema-registry/src"
-      ],
-      "@app/event-schema-registry/*": [
-        "libs/event-schema-registry/src/*"
-      ]
+      "@app/event-schemas/*": ["event-schemas/*"],
+      "@app/event-schema-registry": ["libs/event-schema-registry/src"],
+      "@app/event-schema-registry/*": ["libs/event-schema-registry/src/*"]
     }
   }
 }
