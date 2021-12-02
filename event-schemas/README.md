@@ -1,6 +1,6 @@
 Path:
 
-`event-schemas/domain/[be|cud]/event-name/version.json`
+`event-schemas/[domain]/[be|cud]/[event-name]/[version].json`
 
 Base event:
 
