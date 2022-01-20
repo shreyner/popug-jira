@@ -7,7 +7,7 @@ import { BaseEvent } from '@app/event-schema-registry/types/base-event.type';
 //TODO: Что это такое и как его именовать?
 @Injectable()
 export class MessageBusProvider {
-  logger = new Logger('MessageBus');
+  logger = new Logger(MessageBusProvider.name);
 
   // FIXME: Вынести в отдельную lib
   constructor(

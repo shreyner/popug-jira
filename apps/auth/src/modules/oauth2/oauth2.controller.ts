@@ -41,10 +41,6 @@ export class Oauth2Controller {
     @Query() { client_id, redirect_uri, state }: AuthorizeDto,
     @User() user,
   ) {
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
     const { code, redirectUri } = await this.oAuth2Service.authorize({
       user,
       clientId: client_id,
@@ -71,24 +67,17 @@ export class Oauth2Controller {
   async token(
     @Body() exchangeCodeDto: ExchangeCodeDto,
   ): Promise<ResponseExchageCodeInterface> {
-    const {
-      grant_type,
-      code,
-      client_secret,
-      client_id,
-      redirect_uri,
-    } = exchangeCodeDto;
+    const { grant_type, code, client_secret, client_id, redirect_uri } =
+      exchangeCodeDto;
 
-    const {
-      refresh_token,
-      access_token,
-    } = await this.oAuth2Service.exchangeCode({
-      grant_type,
-      code,
-      client_id,
-      client_secret,
-      redirect_uri,
-    });
+    const { refresh_token, access_token } =
+      await this.oAuth2Service.exchangeCode({
+        grant_type,
+        code,
+        client_id,
+        client_secret,
+        redirect_uri,
+      });
 
     return {
       access_token,
