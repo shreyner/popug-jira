@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { isNil } from '@nestjs/common/utils/shared.utils';
 import { MikroORM } from '@mikro-orm/core';
 import { Logger } from '@nestjs/common';

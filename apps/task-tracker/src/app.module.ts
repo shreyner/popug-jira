@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { PassportModule } from '@nestjs/passport';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';

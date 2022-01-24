@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { Logger } from '@nestjs/common';
 import { Options } from '@mikro-orm/core';
 import { Task, User } from './entities';
