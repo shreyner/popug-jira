@@ -24,3 +24,5 @@ $ npm install
 - [Naming Cheatsheet](https://github.com/kettanaito/naming-cheatsheet#naming-functions)
 
 ### TODO:
+
+Использовать nestjs-config
