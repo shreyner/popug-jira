@@ -7,13 +7,12 @@ import {
   Post,
   Query,
   Redirect,
-  UnauthorizedException,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { AuthorizeDto } from './dto/authorize.dto';
 import { Oauth2Service } from './oauth2.service';
-import { User } from '../../common/user.decorator';
+import { User } from '../../common/decorators/user.decorator';
 import { UsersService } from '../users/users.service';
 import { ResponseExchageCodeInterface } from './interface/response-exchage-code.interface';
 import { ExchangeCodeDto } from './dto/exchange-code.dto';

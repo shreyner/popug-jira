@@ -18,7 +18,7 @@ import {
 import { isNil } from '@nestjs/common/utils/shared.utils';
 import { HasLocalAuthGuard } from './guard/has-local-auth.guard';
 import { AuthenticatedGuard } from './guard/authenticated.guard';
-import { User as UserDecorator } from '../../common/user.decorator';
+import { User as UserDecorator } from '../../common/decorators/user.decorator';
 import { AuthExceptionFilter } from './filter/auth-exception.filter';
 import { User } from '../../entities';
 import { RegistryUserDto } from './dto/registry-user.dto';

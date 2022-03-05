@@ -37,16 +37,13 @@ export class MessageBusProvider {
       if (!valid) {
         this.logger.error(
           `Invalid event data. Topic: ${topic} . EventName: ${eventName} . Producer: ${event.producer} .`,
-        );
-        console.error(
-          `Invalid event data. Topic: ${topic} . EventName: ${eventName} . Producer: ${event.producer} .`,
           errors,
         );
         throw new Error(); // TODO: Подставить кастомную ошибку
       }
     }
 
-    console.log('SendEvent topic: %s . event: %o', topic, event);
+    this.logger.log(`SendEvent topic: ${topic}, . event:`, event);
 
     return this.publisher.emit(topic, event);
   }

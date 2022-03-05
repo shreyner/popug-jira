@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { HasBearerAuthGuard } from '../auth/guard/has-bearer-auth.guard';
-import { User as UserDecorator } from '../../common/user.decorator';
+import { User as UserDecorator } from '../../common/decorators/user.decorator';
 import { User } from '../../entities';
 import { Dictionary, NotFoundError, wrap } from '@mikro-orm/core';
 import { HttpStatus } from '@nestjs/common';

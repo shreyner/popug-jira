@@ -1,42 +1,32 @@
 import morgan from 'morgan';
-import session from 'express-session';
 import passport from 'passport';
-import createRedisStore from 'connect-redis';
-import * as redis from 'redis';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 
-const RedisStore = createRedisStore(session);
-
 async function bootstrap() {
   try {
-    const redisClient = redis.createClient({
-      prefix: 'auth-service',
-    });
-    redisClient.on('error', (error) => {
-      throw new Error(error);
-    });
+    const fastifyAdapter = new FastifyAdapter();
 
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create<NestFastifyApplication>(
+      AppModule,
+      fastifyAdapter,
+    );
     app.use(morgan('tiny'));
     app.useGlobalPipes(new ValidationPipe());
     const configService = app.get<ConfigService>(ConfigService);
 
     const httpPort = configService.get<number>('PORT');
-    app.use(
-      session({
-        store: new RedisStore({ client: redisClient }),
-        secret: configService.get<string>('SESSION_SECRET'),
-        resave: false,
-        saveUninitialized: false,
-      }),
-    );
-    app.use(passport.initialize());
-    app.use(passport.session());
 
-    await app.listen(httpPort);
+    // app.use(passport.initialize());
+    // app.use(passport.session());
+
+    await app.listen(httpPort, '0.0.0.0');
   } catch (error) {
     console.error(error);
 

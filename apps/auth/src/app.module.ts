@@ -19,10 +19,10 @@ import { MessageBusModule } from './modules/message-bus/message-bus.module';
       envFilePath: join(__dirname, '..', '..', '..', '.auth.env'),
       isGlobal: true,
     }),
-    PassportModule.register({
-      defaultStrategy: 'local',
-      session: true,
-    }),
+    // PassportModule.register({
+    //   defaultStrategy: 'local',
+    //   session: true,
+    // }),
     UsersModule,
     AuthModule,
     Oauth2Module,

@@ -1,6 +1,6 @@
+import { PassportSerializer } from '@nestjs/passport';
 import { isNil } from '@nestjs/common/utils/shared.utils';
 import { Injectable } from '@nestjs/common';
-import { PassportSerializer } from '@nestjs/passport';
 
 import { UserRepository } from '../../repositories/user.repository';
 

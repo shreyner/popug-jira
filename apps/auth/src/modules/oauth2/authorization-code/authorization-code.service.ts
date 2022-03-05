@@ -1,8 +1,8 @@
 import * as crypto from 'crypto';
 import { Injectable } from '@nestjs/common';
+import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { AuthorizationCode } from '../../../entities';
-import { EntityRepository } from '@mikro-orm/core';
 
 @Injectable()
 export class AuthorizationCodeService {
