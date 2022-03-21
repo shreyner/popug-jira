@@ -22,6 +22,7 @@ $ npm install
 - Добавить в Docker image [github.com/Yelp/dumb-init](https://github.com/Yelp/dumb-init)
 - Статья с описанием структуры для NestJS приложения [medium.com/the-crowdlinker-chronicle/best-way-to-structure-your-directory-code-nestjs](https://medium.com/the-crowdlinker-chronicle/best-way-to-structure-your-directory-code-nestjs-a06c7a641401)
 - [Naming Cheatsheet](https://github.com/kettanaito/naming-cheatsheet#naming-functions)
+- [REST API Tutorial — руководство по REST API](https://restapitutorial.ru)
 
 ### TODO:
 
