@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { Dictionary, wrap } from '@mikro-orm/core';
 import { User } from '../../entities';
@@ -9,7 +10,6 @@ export class ProfilesController {
   @UseGuards(HasBearerAuthGuard)
   @Get('me') //TODO: Добавить валидациюю по схеме профиля который отсылаем
   async me(@UserDecorator() user: User): Promise<Dictionary> {
-    const { id, ...otherUserFields } = wrap(user).toJSON();
-    return otherUserFields;
+    return omit(wrap(user).toJSON(), 'id');
   }
 }

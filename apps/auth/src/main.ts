@@ -1,5 +1,4 @@
 import morgan from 'morgan';
-import passport from 'passport';
 import {
   FastifyAdapter,
   NestFastifyApplication,

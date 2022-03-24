@@ -17,6 +17,8 @@ export class AppController {
   @UseGuards(AuthenticatedGuard)
   @Get('/check')
   checkAuth(@User() user) {
+    console.log(user);
+
     return true;
   }
 }

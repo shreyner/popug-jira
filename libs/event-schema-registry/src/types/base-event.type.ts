@@ -1,4 +1,4 @@
-export type BaseEvent<E extends string, T extends unknown> = {
+export type BaseEvent<E extends string, T> = {
   eventId: string;
   eventVersion: number;
   eventTime: string;

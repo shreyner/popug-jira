@@ -7,7 +7,6 @@ import { EntityRepository } from '@mikro-orm/postgresql';
 import { Task, TaskPrice, User } from '../../entities';
 import { TaskRepository } from '../../repositories/task.repository';
 import { UserRepository } from '../../repositories/user.repository';
-import { wrap } from '@mikro-orm/core';
 
 @Injectable()
 export class TasksService {

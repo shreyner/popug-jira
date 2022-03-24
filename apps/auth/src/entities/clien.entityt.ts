@@ -10,7 +10,8 @@ import { ClientInterface } from '../modules/clients/interface/client.interface';
 @Entity({})
 export class Client
   extends BaseEntity<Client, 'id'>
-  implements ClientInterface {
+  implements ClientInterface
+{
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 

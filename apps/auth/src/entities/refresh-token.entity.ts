@@ -13,7 +13,8 @@ import { RefreshTokenInterface } from '../modules/oauth2/interface/refresh-token
 @Entity({})
 export class RefreshToken
   extends BaseEntity<RefreshToken, 'id'>
-  implements RefreshTokenInterface {
+  implements RefreshTokenInterface
+{
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 

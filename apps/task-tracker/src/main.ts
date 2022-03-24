@@ -57,7 +57,6 @@ async function bootstrap() {
     app.use(passport.initialize());
     app.use(passport.session());
 
-
     const httpPort = configService.get<number>('PORT');
 
     await app.startAllMicroservicesAsync();

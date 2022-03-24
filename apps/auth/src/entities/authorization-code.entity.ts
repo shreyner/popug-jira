@@ -13,7 +13,8 @@ import { AuthorizationCodeInterface } from '../modules/oauth2/interface/authoriz
 @Entity({})
 export class AuthorizationCode
   extends BaseEntity<AuthorizationCode, 'id'>
-  implements AuthorizationCodeInterface {
+  implements AuthorizationCodeInterface
+{
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 

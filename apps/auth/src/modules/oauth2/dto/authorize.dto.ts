@@ -1,10 +1,4 @@
-import {
-  Equals,
-  IsDefined,
-  IsMagnetURI,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { Equals, IsDefined, IsOptional, IsString } from 'class-validator';
 
 export class AuthorizeDto {
   @Equals('code')

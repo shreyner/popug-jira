@@ -46,13 +46,12 @@ export class Oauth2Service {
       throw new NotFoundException('Client not found');
     }
 
-    const authorizationCode = await this.authorizationCodeService.createGrantCode(
-      {
+    const authorizationCode =
+      await this.authorizationCodeService.createGrantCode({
         client,
         user,
         redirectUri,
-      },
-    );
+      });
 
     return {
       code: authorizationCode.code,
@@ -80,9 +79,8 @@ export class Oauth2Service {
       );
     }
 
-    const authGrantByCode = await this.authorizationCodeService.getAuthGrantByCode(
-      code,
-    );
+    const authGrantByCode =
+      await this.authorizationCodeService.getAuthGrantByCode(code);
 
     if (isNil(authGrantByCode)) {
       throw new ForbiddenException();
@@ -105,10 +103,8 @@ export class Oauth2Service {
       throw new ForbiddenException();
     }
 
-    const {
-      refreshToken,
-      accessToken,
-    } = await this.createAccessTokenAndRefreshToken({ user, client });
+    const { refreshToken, accessToken } =
+      await this.createAccessTokenAndRefreshToken({ user, client });
 
     return {
       access_token: accessToken.token,

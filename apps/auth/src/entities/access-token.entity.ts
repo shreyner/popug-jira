@@ -13,7 +13,8 @@ import { AccessTokenInterface } from '../modules/oauth2/interface/access-token.i
 @Entity({})
 export class AccessToken
   extends BaseEntity<AccessToken, 'id'>
-  implements AccessTokenInterface {
+  implements AccessTokenInterface
+{
   @PrimaryKey({ index: true, type: BigIntType })
   id: bigint;
 
