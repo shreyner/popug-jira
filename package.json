@@ -93,7 +93,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.5.1",
+    "lint-staged": "^12.3.7",
     "prettier": "^2.6.0",
+    "simple-git-hooks": "^2.7.0",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.3",
     "ts-loader": "^9.2.8",
@@ -126,5 +128,17 @@
       "@app/event-schema-registry/(.*)": "<rootDir>/libs/event-schema-registry/src/$1",
       "@app/event-schema-registry": "<rootDir>/libs/event-schema-registry/src"
     }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "yarn run lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint",
+      "prettier --check"
+    ],
+    "*.{md,json}": [
+      "prettier --check"
+    ]
   }
 }
