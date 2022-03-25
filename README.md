@@ -24,6 +24,8 @@ $ npm install
 - [Naming Cheatsheet](https://github.com/kettanaito/naming-cheatsheet#naming-functions)
 - [REST API Tutorial — руководство по REST API](https://restapitutorial.ru)
 
+
 ### TODO:
+- [class-transformer](https://github.com/typestack/class-transformer) использовать для DTO на reponse
 
 Использовать nestjs-config
