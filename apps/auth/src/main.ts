@@ -7,6 +7,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   try {
@@ -24,6 +25,14 @@ async function bootstrap() {
 
     // app.use(passport.initialize());
     // app.use(passport.session());
+
+    const swaggerConfig = new DocumentBuilder()
+      .setTitle('PopugJira Auth service')
+      .setVersion('0.1')
+      .build();
+
+    const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup('swagger-api', app, swaggerDocument);
 
     await app.listen(httpPort, '0.0.0.0');
   } catch (error) {

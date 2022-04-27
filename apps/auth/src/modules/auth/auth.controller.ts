@@ -1,6 +1,5 @@
 import * as qs from 'qs';
 import { UniqueConstraintViolationException, wrap } from '@mikro-orm/core';
-import { Request as RequestType } from 'express';
 import {
   BadRequestException,
   Body,
@@ -71,7 +70,7 @@ export class AuthController {
 
   @Post('registry')
   async registry(
-    @Request() req: RequestType,
+    @Request() req: unknown,
     @Body() registryUserDto: RegistryUserDto,
   ) {
     try {
