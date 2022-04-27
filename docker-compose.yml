@@ -16,7 +16,7 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
 
   pgadmin:
-    image: dpage/pgadmin4:5
+    image: dpage/pgadmin4:6
     ports:
       - 3081:80
     depends_on:

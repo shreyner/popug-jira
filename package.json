@@ -141,7 +141,7 @@
       "eslint",
       "prettier --check"
     ],
-    "*.{md,json}": [
+    "*.{md,json,yml}": [
       "prettier --check"
     ]
   }
